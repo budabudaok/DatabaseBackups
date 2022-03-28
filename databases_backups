@@ -8,24 +8,34 @@ cd /var/lib/mysql ;
 echo "Backupeando icinga2..."
 printf "\n"
 mysqldump icinga2 > "icinga2_bkp_$(date +"%d_%m_%Y").sql" ;
+printf "\n"
 echo "Backupeando director..."
 printf "\n"
 mysqldump director > "director_bkp_$(date +"%d_%m_%Y").sql" ;
+printf "\n"
 echo "Backupeando icinga2web..."
 printf "\n"
 mysqldump icinga2web > "icinga2web_bkp_$(date +"%d_%m_%Y").sql" ;
+printf "\n"
 echo "Backupeando live_event_hbomax..."
 printf "\n"
 mysqldump live_event_hbomax > "live_event_hbomax_bkp_$(date +"%d_%m_%Y").sql" ;
+printf "\n"
 echo "Backupeando elemental..."
 printf "\n"
 mysqldump elemental > "elemental_bkp_$(date +"%d_%m_%Y").sql" ;
+printf "\n"
 echo "Backupeando ottowiki..."
 printf "\n"
 mysqldump ottowiki > "ottowiki_bkp_$(date +"%d_%m_%Y").sql" ;
 
-  echo "Moviendo BACKUPS a /backups-globales..."
-  mv /var/lib/mysql/*.sql /backups-globales
-  
+echo "Moviendo BACKUPS a /backups-globales..."
+mv /var/lib/mysql/*.sql /backups-globales
 
-done
+printf "\n"
+printf "\n"  
+echo "BACKUPS generados y movidos Correctamente"
+printf "\n"
+sleep 3;
+
+exit 0;
