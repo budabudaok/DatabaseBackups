@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-#.:Backups: /var/lib/mysql databases from .:DANIEL BUSTAMANTE:.
+#.:Databases Backups from /var/lib/mysql databases  by .:BUDABUDAOK:.
 
 IFS="$"
 
