@@ -51,15 +51,15 @@ sleep 3;
 							find /backups-globales -name "*.sql" -type f -mtime +1 -delete 
 							printf "\n"
 							sleep 2;
-							echo "¡Done! only the last backups are on the server:"
+							echo "¡Done! these are the last backups on the server:"
 							printf "\n"
 							find /backups-globales -name "*.sql" -type f
 							printf "\n"
 					      ;;
 					       n|no|N|NO)
-					      echo -e "Okay, we won't delete it. "
+					      	echo "Okay, we won't do anything. "
 					      	printf "\n"
-					      	echo "¡Done! only the last backups are on the server:"
+					      	echo "These are the last backups on the server:"
 							printf "\n"
 					      	find /backups-globales -name "*.sql" -type f
 							sleep 2;
