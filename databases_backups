@@ -1,41 +1,67 @@
 #!/usr/bin/env bash
-
 #.:Databases Backups from /var/lib/mysql databases  by .:BUDABUDAOK:.
-
 IFS="$"
 
 cd /var/lib/mysql ;
-echo "Backupeando icinga2..."
+echo "Dumping Database: icinga2..."
 printf "\n"
 mysqldump icinga2 > "icinga2_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Backupeando director..."
+echo "Dumping Database: director..."
 printf "\n"
 mysqldump director > "director_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Backupeando icinga2web..."
+echo "Dumping Database: icinga2web..."
 printf "\n"
 mysqldump icinga2web > "icinga2web_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Backupeando live_event_hbomax..."
+echo "Dumping Database: live_event_hbomax..."
 printf "\n"
 mysqldump live_event_hbomax > "live_event_hbomax_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Backupeando elemental..."
+echo "Dumping Database: elemental..."
 printf "\n"
 mysqldump elemental > "elemental_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Backupeando ottowiki..."
+echo "Dumping Database: ottowiki..."
 printf "\n"
 mysqldump ottowiki > "ottowiki_bkp_$(date +"%d_%m_%Y").sql" ;
 
-echo "Moviendo BACKUPS a /backups-globales..."
+echo "Moving Database Backups to /backups-globales directory..."
 mv /var/lib/mysql/*.sql /backups-globales
-
-printf "\n"
-printf "\n"  
-echo "BACKUPS generados y movidos Correctamente"
-printf "\n"
 sleep 3;
+printf "\n" 
+echo "¡All backups were generated and relocated successfully!"
+printf "\n"
+printf "\n"
+sleep 4;
+clear
+echo "We find the following old backups:"
+printf "\n"
+find /backups-globales -name "*.sql" -type f -mtime +1;
+
+sleep 3;
+					read -r -p "¿Do you want to delete it at all? [y/n] " inputmycnf
+
+					  case $inputmycnf in
+					        s|si|S|SI|y|Y|Yes|YES)
+							printf "\n"
+							echo "Okay, deleting the old backup files..."
+							find /backups-globales -name "*.sql" -type f -mtime +1 -delete 
+							printf "\n"
+							sleep 2;
+							echo "¡Done! only the last backups are on the server."
+							printf "\n"
+							printf "\n"
+					      ;;
+					       n|no|N|NO)
+					      echo -e "Okay, we don't delete it at all. "
+					      	printf "\n"
+							sleep 2;
+					      ;;
+					      *)
+					    echo "Please.. drink a cup of coffee, please... you chooseen a wrong option"
+					      ;;
+					  esac
 
 exit 0;
