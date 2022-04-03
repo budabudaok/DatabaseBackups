@@ -3,31 +3,32 @@
 IFS="$"
 
 cd /var/lib/mysql ;
-echo "Dumping Database: icinga2..."
+printf "\n"
+echo "Dumping Database: icinga2"
 printf "\n"
 mysqldump icinga2 > "icinga2_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Dumping Database: director..."
+echo "Dumping Database: director"
 printf "\n"
 mysqldump director > "director_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Dumping Database: icinga2web..."
+echo "Dumping Database: icinga2web"
 printf "\n"
 mysqldump icinga2web > "icinga2web_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Dumping Database: live_event_hbomax..."
+echo "Dumping Database: live_event_hbomax"
 printf "\n"
 mysqldump live_event_hbomax > "live_event_hbomax_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Dumping Database: elemental..."
+echo "Dumping Database: elemental"
 printf "\n"
 mysqldump elemental > "elemental_bkp_$(date +"%d_%m_%Y").sql" ;
 printf "\n"
-echo "Dumping Database: ottowiki..."
+echo "Dumping Database: ottowiki"
 printf "\n"
 mysqldump ottowiki > "ottowiki_bkp_$(date +"%d_%m_%Y").sql" ;
 
-echo "Moving Database Backups to /backups-globales directory..."
+echo "Moving database backups to /backups-globales directory..."
 mv /var/lib/mysql/*.sql /backups-globales
 sleep 3;
 printf "\n" 
@@ -50,17 +51,21 @@ sleep 3;
 							find /backups-globales -name "*.sql" -type f -mtime +1 -delete 
 							printf "\n"
 							sleep 2;
-							echo "¡Done! only the last backups are on the server."
+							echo "¡Done! only the last backups are on the server:"
 							printf "\n"
+							find /backups-globales -name "*.sql" -type f
 							printf "\n"
 					      ;;
 					       n|no|N|NO)
-					      echo -e "Okay, we don't delete it at all. "
+					      echo -e "Okay, we won't delete it. "
 					      	printf "\n"
+					      	echo "¡Done! only the last backups are on the server:"
+							printf "\n"
+					      	find /backups-globales -name "*.sql" -type f
 							sleep 2;
 					      ;;
 					      *)
-					    echo "Please.. drink a cup of coffee, please... you chooseen a wrong option"
+					    echo "Please.. drink a cup of coffee, you chooseen a wrong option."
 					      ;;
 					  esac
 
