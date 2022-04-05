@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#.:Databases Backups from /var/lib/mysql databases  by .:BUDABUDAOK:.
+#.:Databases Backups from /var/lib/mysql by .:BUDABUDAOK:.
 IFS="$"
 
 cd /var/lib/mysql ;
@@ -31,24 +31,30 @@ mysqldump ottowiki > "ottowiki_bkp_$(date +"%d_%m_%Y").sql" ;
 echo "Moving database backups to /backups-globales directory..."
 mv /var/lib/mysql/*.sql /backups-globales
 sleep 3;
+printf "\n"
 printf "\n" 
+printf "\n"  
 echo "¡All backups were generated and relocated successfully!"
 printf "\n"
 printf "\n"
 sleep 4;
-clear
-echo "We find the following old backups:"
-printf "\n"
-find /backups-globales -name "*.sql" -type f -mtime +1;
 
-sleep 3;
-					read -r -p "¿Do you want to delete it at all? [y/n] " inputmycnf
+find /backups-globales -daystart -maxdepth 1 -mmin +120 -type f -name "*.sql" > /backups-globales/notempty
+if [ -s /backups-globales/notempty ]
+	then
+		echo "We find the following old backups:"
+		printf "\n"
+		printf "\n"
+		find /backups-globales -daystart -maxdepth 1 -mmin +120 -type f -name "*.sql";
+		sleep 3;
+		printf "\n"
+		read -r -p "¿Do you want to delete it at all? [y/n] " inputmyselection
 
-					  case $inputmycnf in
+					  case $inputmyselection in
 					        s|si|S|SI|y|Y|Yes|YES)
 							printf "\n"
 							echo "Okay, deleting the old backup files..."
-							find /backups-globales -name "*.sql" -type f -mtime +1 -delete 
+							find /backups-globales -daystart -maxdepth 1 -mmin +120 -type f -name "*.sql" -delete 
 							printf "\n"
 							sleep 2;
 							echo "¡Done! these are the last backups on the server:"
@@ -57,7 +63,9 @@ sleep 3;
 							printf "\n"
 					      ;;
 					       n|no|N|NO)
+							printf "\n"
 					      	echo "Okay, we won't do anything. "
+					      	printf "\n"
 					      	printf "\n"
 					      	echo "These are the last backups on the server:"
 							printf "\n"
@@ -68,5 +76,12 @@ sleep 3;
 					    echo "Please.. drink a cup of coffee, you chooseen a wrong option."
 					      ;;
 					  esac
+	else
+		echo "We don't find any old backup."
+		printf "\n"
+		printf "\n"	
+
+fi
+
 
 exit 0;
